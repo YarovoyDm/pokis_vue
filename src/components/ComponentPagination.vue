@@ -1,14 +1,13 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps } from 'vue';
 
-defineProps({
-    page: Number,
-    changePage: Function,
-    pagesQuantity: {
-        type: Number,
-        required: true,
-    },
-})
+interface Props {
+    page: number,
+    changePage: (page: number) => void,
+    pagesQuantity: number,
+}
+
+defineProps<Props>();
 
 </script>
 

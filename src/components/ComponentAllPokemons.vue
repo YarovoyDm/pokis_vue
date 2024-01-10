@@ -1,27 +1,33 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps } from 'vue';
 import ComponentPagination from '@/components/ComponentPagination.vue';
-defineProps({
-    page: Number,
-    getPokemonsPerPage: Array,
-    updatePage: Function,
-    pagesQuantity: Number,
-    selectedPokemonType: Object,
-})
+import {
+    Pokemon,
+} from '@/types/Pokemon';
+
+interface Props {
+    page: number,
+    getPokemonsPerPage: Array<Pokemon>,
+    updatePage: (page: number) => void,
+    pagesQuantity: number,
+    selectedPokemonType: {typeName: string, typeUrl: string},
+}
+
+defineProps<Props>();
 
 </script>
 
 <template>
-    <div :class="[$style.pokemonWrapper, {[$style.pokemonWraperByType]: selectedPokemonType.typeName}]">
+    <div :class="[$style.pokemonWrapper, {[$style.pokemonWraperByType]: selectedPokemonType?.typeName}]">
         <div
-            v-if="selectedPokemonType.typeName"
+            v-if="selectedPokemonType?.typeName"
             :class="$style.selectedType"
         >
             Result for: <div :class="$style.typeName">{{ selectedPokemonType.typeName }}</div>
         </div>
         <router-link
             :to="'/' + pokemon.name"
-            :class="[$style.pokemon, {[$style.pokemonByType]: selectedPokemonType.typeName}]"
+            :class="[$style.pokemon, {[$style.pokemonByType]: selectedPokemonType?.typeName}]"
             :key="pokemon.name"
             v-for="pokemon in getPokemonsPerPage"
         >
@@ -29,7 +35,7 @@ defineProps({
         </router-link>
     </div>
     <ComponentPagination
-        v-if="!selectedPokemonType.typeName"
+        v-if="!selectedPokemonType?.typeName"
         :changePage="updatePage" 
         :page="page"
         :pagesQuantity="pagesQuantity"
@@ -80,4 +86,3 @@ defineProps({
 }
 
 </style>
-

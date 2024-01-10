@@ -1,29 +1,35 @@
-<script setup>
-import { getPokemon} from '@/API';
-import router from '@/router';
+<script setup lang="ts">
 import { onMounted, ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+import router from '@/router';
+import { getPokemon } from '@/API';
+import { Mutations } from '@/constants/Mutations';
+import {
+    PokemonInfo,
+} from '@/types/Pokemon';
+import type { Ref } from 'vue';
 
 const route = useRoute();
 const store = useStore();
+const isLoading: Ref<boolean> = ref(true);
 const { pokemonName } = route.params;
-const isLoading = ref(true);
-const pokemonInfo = computed(() => store.getters.getPokemonInfo);
-const pokemonAvatar = computed(() => 'url(' + pokemonInfo.value.sprites.front_default + ')');
+
+const pokemonInfo = computed<PokemonInfo>(() => store.getters.getPokemonInfo);
+const pokemonAvatar = computed<string>(() => 'url(' + pokemonInfo.value.sprites.front_default + ')');
 
 onMounted(() => {
     getPokemon(pokemonName)
         .then(res => {
-            store.commit('savePokemonInfoToStore', res.data);
+            store.commit(Mutations.SAVE_POKEMON_INFO_TO_STORE, res.data);
             isLoading.value = false;
-        })
-})
+        });
+});
 
-const onTypeClick = (data) => {
-    store.commit('savePokemonTypeToStore', data);
+const onTypeClick = (data: { value: string, url: string }) => {
+    store.commit(Mutations.SAVE_SELECTED_TYPE_TO_STORE, data);
     router.push('/');
-}
+};
 
 </script>
 
@@ -44,7 +50,7 @@ const onTypeClick = (data) => {
                     <div
                         :class="$style.move"
                         v-for="item in pokemonInfo.moves"
-                        :key="item.url"
+                        :key="item.move.url"
                     >
                         {{ item.move.name }}
                     </div>

@@ -1,4 +1,4 @@
-import { getPokemon} from "./GetPokemon";
+import { getPokemon } from "./GetPokemon";
 import { getTypes } from "./GetTypes";
 import { getPokemons } from "./GetAllPokemons";
 import { getPokemonsByType } from "./GetPokemonsByType";
@@ -8,4 +8,4 @@ export {
     getTypes,
     getPokemons,
     getPokemonsByType,
-}
+};

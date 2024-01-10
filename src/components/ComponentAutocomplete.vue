@@ -1,31 +1,23 @@
-<script setup>
-import { ref, defineProps } from 'vue'
+<script setup lang="ts">
+import { ref, defineProps } from 'vue';
+import type { Ref } from 'vue';
 
-defineProps({
-    placeholder: {
-        type: String,
-    },
-    handleSelect: {
-        type: Function
-    },
-    options: {
-        type: Function
-    },
-    reset: {
-        type: Function
-    },
-    defaultValue: {
-        type: String
-    }
-})
+type Props = {
+    placeholder?: string,
+    handleSelect: (item: {value: string, url: string}) => void,
+    options: (query: string) => Array<{ value: string, url: string }>,
+    reset?: () => void,
+    defaultValue?: string,
+}
 
-const inputValue = ref('');
+defineProps<Props>();
+
+const inputValue: Ref<string> = ref('');
 
 </script>
 
 <template>
     <el-autocomplete
-        v-model="inputValue"
         :model-value="defaultValue || inputValue"
         :fetch-suggestions="options"
         clearable

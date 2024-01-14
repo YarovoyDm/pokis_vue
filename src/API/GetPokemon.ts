@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { DEFAULT_API_URL } from '@/constants/Pokemons';
-import {
-    PokemonInfo,
-} from '@/types/Pokemon';
+import { PokemonInfo } from '@/types/Pokemon';
 
-interface Response {
+type Response = {
     [key: string]: PokemonInfo,
 }
 

@@ -5,9 +5,7 @@ import { useStore } from 'vuex';
 import router from '@/router';
 import { getPokemon } from '@/API';
 import { Mutations } from '@/constants/Mutations';
-import {
-    PokemonInfo,
-} from '@/types/Pokemon';
+import { PokemonInfo } from '@/types/Pokemon';
 import type { Ref } from 'vue';
 
 const route = useRoute();
@@ -26,7 +24,7 @@ onMounted(() => {
         });
 });
 
-const onTypeClick = (data: { value: string, url: string }) => {
+const onTypeClick = (data: {[key: string]: string}): void => {
     store.commit(Mutations.SAVE_SELECTED_TYPE_TO_STORE, data);
     router.push('/');
 };

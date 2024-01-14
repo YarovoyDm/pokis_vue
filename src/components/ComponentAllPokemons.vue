@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import ComponentPagination from '@/components/ComponentPagination.vue';
-import {
-    Pokemon,
-} from '@/types/Pokemon';
+import { Pokemon } from '@/types/Pokemon';
 
 interface Props {
     page: number,

@@ -5,7 +5,7 @@ import type { Ref } from 'vue';
 type Props = {
     placeholder?: string,
     handleSelect: (item: {value: string, url: string}) => void,
-    options: (query: string) => Array<{ value: string, url: string }>,
+    options: (query: string) => Array<{[key: string]: string}> | string,
     reset?: () => void,
     defaultValue?: string,
 }
